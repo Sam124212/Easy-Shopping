@@ -1,4 +1,6 @@
+import 'package:ecommreceapp/controller/forgot-pass-cntrlr.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class ForgotPassScreen extends StatefulWidget {
@@ -9,14 +11,17 @@ class ForgotPassScreen extends StatefulWidget {
 }
 
 class _ForgotPassScreenState extends State<ForgotPassScreen> {
-  final ResetEmail = TextEditingController();
+  final _ResetEmail = TextEditingController();
+
+  final ForgetPasswordController forgetPasswordController =
+  Get.put(ForgetPasswordController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xfffbeeff),
+        // backgroundColor: Color(0xfffbeeff),
         appBar: AppBar(
-          backgroundColor: Color(0xfffbeeff),
+          // backgroundColor: Color(0xfffbeeff),
           title: Text('Forgot Password'),
         ),
         body: Padding(
@@ -41,7 +46,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                 height: 15,
               ),
               TextFormField(
-                controller: ResetEmail,
+                controller: _ResetEmail,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: RequiredValidator(errorText: "Email required"),
                 decoration: InputDecoration(
@@ -66,37 +71,21 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                 height: 15,
               ),
               ElevatedButton(
-                onPressed: () {
-                  // resetPassword(ResetEmail.text.trim(), context);
-                  //send reset password link
+                onPressed: ()async{
+                  String email = _ResetEmail.text.trim();
+
+                  if(email.isEmpty){
+                    Get.snackbar("Error", "Please enter all details",snackPosition: SnackPosition.BOTTOM);
+                  }else{
+                    String email = _ResetEmail.text.trim();
+                    forgetPasswordController.ForgetPasswordMethod(email);
+                  }
                 },
                 child: Text('Get Link'),
               )
             ],
           ),
-        ));
+        )
+    );
   }
 }
-
-// Future<void> resetPassword(String email, BuildContext context) async {
-//   try {
-//     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-//     // Password reset email sent successfully, show a confirmation message
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(
-//         content: Text('Password reset email sent. Please check your email.'),
-//         duration: Duration(seconds: 3),
-//       ),
-//     );
-//   } catch (e) {
-//     // Handle any errors that occurred during the password reset process
-//     print('Error sending password reset email: $e');
-//     // Show an error message to the user
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(
-//         content: Text('Failed to send password reset email. Please try again.'),
-//         duration: Duration(seconds: 3),
-//       ),
-//     );
-//   }
-// }
