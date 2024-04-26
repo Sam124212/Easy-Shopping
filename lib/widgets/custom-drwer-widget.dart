@@ -1,4 +1,5 @@
 import 'package:ecommreceapp/screens/auth-ui/welcome-screen.dart';
+import 'package:ecommreceapp/screens/user-panel/all-orders-screen.dart';
 import 'package:ecommreceapp/utils/app-constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,10 @@ class MyDrawer_Widget extends StatelessWidget {
                 title: Text("Orders"),
                 leading:Icon(Icons.shopping_bag_outlined),
                 trailing: Icon(Icons.arrow_forward),
+                onTap: (){
+                  Get.back();
+                  Get.to(()=> AllOrdersScreen());
+                },
               ),
             ),
             Padding(

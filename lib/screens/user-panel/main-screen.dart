@@ -9,7 +9,6 @@ import 'package:ecommreceapp/widgets/category-widget.dart';
 import 'package:ecommreceapp/widgets/custom-drwer-widget.dart';
 import 'package:ecommreceapp/widgets/flash-sale-widget.dart';
 import 'package:ecommreceapp/widgets/heading-widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
       // backgroundColor: AppConstant.appMainColor,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: AppConstant.appScendoryColor,
+        backgroundColor: Colors.blue,
         title: Text(
           "Main Screen",
           style: TextStyle(color: AppConstant.appTextColor),
@@ -35,8 +34,8 @@ class _MainScreenState extends State<MainScreen> {
         centerTitle: true,
         actions: [
           GestureDetector(
-          onTap: ()=> Get.to(() => CartScreen()),
-    child: Padding(
+            onTap: () => Get.to(() => CartScreen()),
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(Icons.shopping_cart),
             ),
@@ -54,25 +53,26 @@ class _MainScreenState extends State<MainScreen> {
               ),
               //banners
               BannerWidget(),
+              BannerWidget(),
               //headings
               HeadingWidget(
                 headingTitle: "Categories",
                 headingSubTitle: "According to your budget",
-                onTap: () => Get.to(()=> AllCategories()),
+                onTap: () => Get.to(() => AllCategories()),
                 buttonText: "See More >",
               ),
               CategoriesWidget(),
               HeadingWidget(
                 headingTitle: "Flash Sale",
                 headingSubTitle: "According to your budget",
-                onTap: () =>Get.to(()=> AllFlashScreen()),
+                onTap: () => Get.to(() => AllFlashScreen()),
                 buttonText: "See More >",
               ),
               FlashSaleWidget(),
               HeadingWidget(
                 headingTitle: "All Products",
                 headingSubTitle: "According to your budget",
-                onTap: () => Get.to(()=> AllProductsScreen()),
+                onTap: () => Get.to(() => AllProductsScreen()),
                 buttonText: "See More >",
               ),
               AllProductsWidget(),

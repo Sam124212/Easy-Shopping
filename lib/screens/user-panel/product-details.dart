@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommreceapp/models/cart-model.dart';
 import 'package:ecommreceapp/models/products-model.dart';
 import 'package:ecommreceapp/screens/user-panel/cart-screen.dart';
@@ -8,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductDetails extends StatefulWidget {
   ProductModel productModel;
@@ -30,7 +31,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         title: Text("Product Details"),
         actions: [
           GestureDetector(
-            onTap: ()=> Get.to(() => CartScreen()),
+            onTap: () => Get.to(() => CartScreen()),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(Icons.shopping_cart),
@@ -129,7 +130,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   color: AppConstant.appScendoryColor,
                                   borderRadius: BorderRadius.circular(20)),
                               child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    sendMassageOnWhatsaap(
+                                        productModel: widget.productModel);
+                                  },
                                   child: Text(
                                     "WhatsApp",
                                     style: TextStyle(color: Colors.white),
@@ -162,6 +166,20 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
       ),
     );
+  }
+
+  static Future<void> sendMassageOnWhatsaap(
+      {required ProductModel productModel}) async {
+    final number = "+923408832407";
+    final message =
+        "Helloo Sam \n i want to know about this product \n ${productModel.productName} \n ${productModel.productDescription}";
+    final url = "https://wa.me/$number?text=${Uri.encodeComponent(message)}";
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw "Can not launch $url";
+    }
   }
 
   // check product existence
